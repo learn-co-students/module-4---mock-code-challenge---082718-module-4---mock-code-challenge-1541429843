@@ -1,20 +1,26 @@
-import React, { Fragment } from 'react'
+import React from 'react'
 
 const Sushi = (props) => {
+  const sushi = props.sushi
+
+  const displayIfUneaten = () => {
+    if (!props.checkEaten(sushi.id)) {
+      return <img src={sushi.img_url} width="100%" alt={sushi.name} />
+    }
+  }
+
+  const eat = () => {
+    props.eat(sushi)
+  }
+
   return (
     <div className="sushi">
-      <div className="plate" 
-           onClick={/* Give me a callback! */ null}>
-        { 
-          /* Tell me if this sushi has been eaten! */ 
-          true ?
-            null
-          :
-            <img src={/* Give me an image source! */} width="100%" />
-        }
+      <div className="plate"
+           onClick={eat}>
+        {displayIfUneaten()}
       </div>
       <h4 className="sushi-details">
-        {/* Give me a name! */} - ${/* Give me a price! */}
+        {sushi.id}. {sushi.name} - ${sushi.price}
       </h4>
     </div>
   )
