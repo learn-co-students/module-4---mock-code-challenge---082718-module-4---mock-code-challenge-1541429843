@@ -55,22 +55,19 @@ class App extends Component {
     }
   }
 
-  wheresMyMoney = (sushiPrice) => {
-    debugger
-    this.setState(Object.assign({}, this.state, {
-      cashMoney: this.state.cashMoney - sushiPrice,
-    }))
-  }
-
   epicMealTime = (nomz) => {
-    // this.wheresMyMoney(nomz.price)
-    const i = this.state.nomming.findIndex(sushi => sushi.id === nomz.id);
-    const newNomming = this.state.nomming.slice();
-    newNomming[i] = Object.assign({}, nomz, {nommed: true})
-    this.setState(Object.assign({}, this.state, {
-      nomming: newNomming,
-      cashMoney: this.state.cashMoney - nomz.price,
-    }))
+    if (this.state.cashMoney - nomz.price >= 0) {
+      const i = this.state.nomming.findIndex(sushi => sushi.id === nomz.id);
+      const newNomming = this.state.nomming.slice();
+      newNomming[i] = Object.assign({}, nomz, {nommed: true})
+      this.setState(Object.assign({}, this.state, {
+        nomming: newNomming,
+        cashMoney: this.state.cashMoney - nomz.price,
+      }))
+    } else {
+      alert('not enough mana')
+    }
+
   }
 
   render() {
