@@ -1,9 +1,13 @@
 import React from 'react'
 
+const callback = () => {
+  debugger
+}
+
 const MoreButton = (props) => {
-    return <button onClick={/* Fill me in! */ null}>
+    return (<button onClick={callback}>
             More sushi!
-          </button>
+          </button>)
 }
 
 export default MoreButton
