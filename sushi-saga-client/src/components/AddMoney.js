@@ -11,7 +11,7 @@ const AddMoney = (props) => {
       amount to add :
       <input type="text" onChange={e => this.amount = e.target.value}>
       </input>
-      <input type="submit"></input>
+      <input type="submit" value="takemoney"></input>
     </form>
   </div>
 }

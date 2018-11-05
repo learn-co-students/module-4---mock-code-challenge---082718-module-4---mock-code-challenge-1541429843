@@ -42,9 +42,12 @@ class App extends Component {
   }
 
   getServed = (i=0) => {
-    const current = this.state.sushis.slice(i, i+4);
+    const uneaten = this.state.nomming.filter(s => !s.nommed);
+    const avail = this.state.sushis.filter(s => !s.nommed);
+    const current = avail.slice(i, i+4);
+    const remaining = [...avail.slice(4), ...uneaten];
     this.setState(Object.assign({}, this.state, {
-      sushis: this.state.sushis.slice(4),
+      sushis: remaining,
       nomming: current,
     }))
   }
@@ -73,7 +76,7 @@ class App extends Component {
     }
   }
 
-  takeMyMoney = () => {
+  takeMyTwenty = () => {
     this.setState(Object.assign({}, this.state, {
       cashMoney: this.state.cashMoney + 20,
     }))
@@ -84,6 +87,15 @@ class App extends Component {
       cashMoney: this.state.cashMoney + parseInt(amount),
     }))
   }
+  restartBelt = () => {
+    this.getSushis()
+    .then(sushis => {
+      this.setSushiState(sushis)
+    })
+    .then(() => {
+      this.getServed()
+    })
+  }
 
   render() {
     return (
@@ -92,9 +104,11 @@ class App extends Component {
           sushis={this.state.nomming}
           mayIhaveAnother={this.mayIhaveAnother}
           wheresMyMoney={this.wheresMyMoney}
-          takeMyMoney={this.takeMyMoney}
+          takeMyTwenty={this.takeMyTwenty}
           takeMyMoneyyy={this.takeMyMoneyyy}
           epicMealTime={this.epicMealTime}
+          plsNoMore={this.state.sushis.length}
+          restartBelt={this.restartBelt}
         />
         <Table
           cashMoney={this.state.cashMoney}
