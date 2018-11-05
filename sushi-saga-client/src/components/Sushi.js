@@ -1,32 +1,26 @@
 import React, { Component } from 'react'
 
-export default class Sushi extends Component {
+const Sushi = (props) => {
 
-  state ={
-    eaten: false
-  }
-
-  handleClick = () =>{
-    if (this.props.wallet < this.props.sushi.price){
+  const handleClick = () =>{
+    if (props.wallet < props.sushi.price){
       alert("You're too poor for this sushi!")
     } else {
-      this.setState({
-        eaten: true
-      }, ()=> this.props.deductPrice(this.props.sushi.price))
+      props.deductPrice(props.sushi.price, props.sushi.id)
     }
   }
 
-  render() {
     return (
       <div className="sushi">
         <div className="plate"
-             onClick={this.handleClick}>
-          { this.state.eaten ? null : <img src={this.props.sushi.img_url} width="100%" /> }
+             onClick={handleClick}>
+          { props.sushi.eaten ? null : <img src={props.sushi.img_url} width="100%" /> }
         </div>
         <h4 className="sushi-details">
-          {this.props.sushi.name} - ${this.props.sushi.price}
+          {props.sushi.name} - ${props.sushi.price}
         </h4>
       </div>
     )
-  }
 }
+
+export default Sushi

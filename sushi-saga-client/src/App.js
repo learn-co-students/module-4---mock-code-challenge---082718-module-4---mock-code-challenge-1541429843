@@ -9,6 +9,10 @@ class App extends Component {
 
   state={
     allSushi: [],
+    display: {
+      start: 1,
+      end: 4
+    },
     customer: {
       eatenSushi:[],
       moneyLeft:100
@@ -21,17 +25,20 @@ class App extends Component {
       .then(parsed=> {
         this.setState({
           ...this.state,
-          allSushi: parsed
+          allSushi: parsed.map(sushiObj=> {
+            return sushiObj= {...sushiObj,
+              eaten: false}
+          })
         })
       })
   }
 
-  deductPrice = (price) =>{
-    // debugger
+  deductPrice = (price, sushiID) =>{
     this.setState({
       ...this.state,
+      allSushi: [...this.state.allSushi, this.state.allSushi[sushiID-1].eaten = true],
       customer:{
-        eatenSushi: [...this.state.customer.eatenSushi, price],
+        eatenSushi: [...this.state.customer.eatenSushi, sushiID],
         moneyLeft: this.state.customer.moneyLeft - price
       }
     })
@@ -47,6 +54,26 @@ class App extends Component {
     })
   }
 
+  showMore = () => {
+    if (this.state.display.end > this.state.allSushi.length-4) {
+      this.setState({
+        ...this.state,
+        display:{
+          start: 1,
+          end: 4
+        }
+      })
+    } else {
+      this.setState({
+        ...this.state,
+        display:{
+          start: this.state.display.start +4,
+          end: this.state.display.end +4,
+        }
+      })
+    }
+  }
+
   componentDidMount(){
     this.getSushi()
   }
@@ -54,7 +81,7 @@ class App extends Component {
   render() {
     return (
       <div className="app">
-        {this.state.customer.moneyLeft > 10 ? this.state.allSushi.length === 0 ? "Getting Sushi!" : <SushiContainer  allSushi={this.state.allSushi} deductPrice={this.deductPrice} wallet={this.state.customer.moneyLeft}/> : "Too poor for sushi!"}
+        {this.state.customer.moneyLeft > 9 ? this.state.allSushi.length === 0 ? "Getting Sushi!" : <SushiContainer  allSushi={this.state.allSushi} deductPrice={this.deductPrice} wallet={this.state.customer.moneyLeft} showMore={this.showMore} display={this.state.display}/> : "Too poor for sushi!"}
         <Table customer={this.state.customer} addTen={this.addTen}/>
       </div>
     );
