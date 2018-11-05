@@ -1,7 +1,6 @@
 import React, { Fragment } from 'react'
 
 const Sushi = (props) => {
-  // debugger
   return (
     <Fragment>
       <div className="sushi">
