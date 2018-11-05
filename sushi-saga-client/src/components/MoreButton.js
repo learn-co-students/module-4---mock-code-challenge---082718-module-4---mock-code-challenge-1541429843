@@ -5,5 +5,5 @@ const MoreButton = (props) => {
             More sushi!
           </button>
 }
-
+ 
 export default MoreButton
