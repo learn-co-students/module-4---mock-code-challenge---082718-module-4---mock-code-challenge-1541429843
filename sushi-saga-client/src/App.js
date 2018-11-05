@@ -78,6 +78,12 @@ class App extends Component {
       cashMoney: this.state.cashMoney + 20,
     }))
   }
+  takeMyMoneyyy = (e, amount) => {
+    e.preventDefault();
+    this.setState(Object.assign({}, this.state, {
+      cashMoney: this.state.cashMoney + parseInt(amount),
+    }))
+  }
 
   render() {
     return (
@@ -87,6 +93,7 @@ class App extends Component {
           mayIhaveAnother={this.mayIhaveAnother}
           wheresMyMoney={this.wheresMyMoney}
           takeMyMoney={this.takeMyMoney}
+          takeMyMoneyyy={this.takeMyMoneyyy}
           epicMealTime={this.epicMealTime}
         />
         <Table

@@ -14,7 +14,7 @@ const SushiContainer = (props) => {
            />
         })}
         <MoreButton mayIhaveAnother={props.mayIhaveAnother} />
-        <AddMoney takeMyMoney={props.takeMyMoney} />
+        <AddMoney takeMyMoney={props.takeMyMoney} takeMyMoneyyy={props.takeMyMoneyyy} />
       </div>
     </Fragment>
   )
