@@ -37,6 +37,16 @@ class App extends Component {
     })
   }
 
+  addTen=()=>{
+    this.setState({
+      ...this.state,
+      customer:{
+        ...this.state.customer,
+        moneyLeft: this.state.customer.moneyLeft +10
+      }
+    })
+  }
+
   componentDidMount(){
     this.getSushi()
   }
@@ -45,7 +55,7 @@ class App extends Component {
     return (
       <div className="app">
         {this.state.customer.moneyLeft > 10 ? this.state.allSushi.length === 0 ? "Getting Sushi!" : <SushiContainer  allSushi={this.state.allSushi} deductPrice={this.deductPrice} wallet={this.state.customer.moneyLeft}/> : "Too poor for sushi!"}
-        <Table customer={this.state.customer}/>
+        <Table customer={this.state.customer} addTen={this.addTen}/>
       </div>
     );
   }

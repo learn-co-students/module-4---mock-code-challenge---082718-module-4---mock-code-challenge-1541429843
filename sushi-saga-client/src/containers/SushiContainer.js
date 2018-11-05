@@ -10,10 +10,17 @@ export default class SushiContainer extends Component {
   }
 
   showMore = () => {
-    this.setState({
-      displayStart: this.state.displayStart + 4,
-      displayEnd: this.state.displayEnd + 4,
-    })
+    if (this.state.displayEnd >= this.props.allSushi.length) {
+      this.setState({
+        displayStart: 1,
+        displayEnd: 4
+      })
+    } else {
+      this.setState({
+        displayStart: this.state.displayStart + 4,
+        displayEnd: this.state.displayEnd + 4,
+      })
+    }
   }
 
   render(){
