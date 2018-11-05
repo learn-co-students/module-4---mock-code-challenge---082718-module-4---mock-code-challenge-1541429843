@@ -1,19 +1,36 @@
-import React, { Fragment } from 'react'
+import React, { Component, Fragment } from 'react'
 import MoreButton from '../components/MoreButton'
+import Sushi from '../components/Sushi'
 
-const SushiContainer = (props) => {
-  return (
-    <Fragment>
-      <div className="belt">
-        {
-          /* 
-             Render Sushi components here!
-          */
-        }
-        <MoreButton />
-      </div>
-    </Fragment>
-  )
+export default class SushiContainer extends Component {
+
+  state={
+    displayStart: 1,
+    displayEnd: 4
+  }
+
+  showMore = () => {
+    if (this.state.displayEnd >= this.props.allSushi.length) {
+      this.setState({
+        displayStart: 1,
+        displayEnd: 4
+      })
+    } else {
+      this.setState({
+        displayStart: this.state.displayStart + 4,
+        displayEnd: this.state.displayEnd + 4,
+      })
+    }
+  }
+
+  render(){
+    return (
+      <Fragment>
+        <div className="belt">
+          {this.props.allSushi.filter(sushi => sushi.id >= this.state.displayStart && sushi.id <= this.state.displayEnd).map(sushi=> <Sushi key={sushi.id} sushi={sushi} deductPrice={this.props.deductPrice} wallet={this.props.wallet}/>)}
+          <MoreButton showMore={this.showMore} />
+        </div>
+      </Fragment>
+    )
+  }
 }
-
-export default SushiContainer
