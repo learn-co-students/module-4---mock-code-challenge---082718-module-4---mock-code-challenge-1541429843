@@ -6,11 +6,15 @@ import Table from './containers/Table';
 const API = "http://localhost:3000/sushis"
 
 class App extends Component {
-  state = {
-    sushis: [],
-    nomming: [],
-    nommed: [],
-    cashMoney: 500,
+  constructor() {
+    super()
+    this.state = {
+      sushis: [],
+      nomming: [],
+      nommed: [],
+      cashMoney: 20,
+    }
+    this.mayIhaveAnother = this.mayIhaveAnother.bind(this)
   }
 
   getSushis = () => {
@@ -19,8 +23,11 @@ class App extends Component {
   }
 
   setSushiState = (sushisJSON) => {
+    const allSushis = sushisJSON.map(sushi => {
+      return Object.assign({}, sushi, {nommed: false})
+    })
     this.setState(Object.assign({}, this.state, {
-      sushis: sushisJSON,
+      sushis: allSushis,
     }))
   }
 
@@ -30,29 +37,39 @@ class App extends Component {
       this.setSushiState(sushis)
     })
     .then(() => {
-      this.setState(Object.assign({}, this.state, {
-        nomming: this.getServed(this.state.sushis, 0)
-      }))
+      this.getServed()
     })
   }
 
-  getServed = (sushis, i) => {
-    const current = sushis.slice(i, i+4);
+  getServed = (i=0) => {
+    const current = this.state.sushis.slice(i, i+4);
     this.setState(Object.assign({}, this.state, {
-      sushis: sushis.slice(4),
+      sushis: this.state.sushis.slice(4),
+      nomming: current,
     }))
-    return current;
   }
 
   mayIhaveAnother = () => {
     if (this.state.cashMoney > 0) {
-      this.getServed(this.state.sushis, 0)
+      this.getServed();
     }
   }
 
   wheresMyMoney = (sushiPrice) => {
+    debugger
     this.setState(Object.assign({}, this.state, {
       cashMoney: this.state.cashMoney - sushiPrice,
+    }))
+  }
+
+  epicMealTime = (nomz) => {
+    // this.wheresMyMoney(nomz.price)
+    const i = this.state.nomming.findIndex(sushi => sushi.id === nomz.id);
+    const newNomming = this.state.nomming.slice();
+    newNomming[i] = Object.assign({}, nomz, {nommed: true})
+    this.setState(Object.assign({}, this.state, {
+      nomming: newNomming,
+      cashMoney: this.state.cashMoney - nomz.price,
     }))
   }
 
@@ -62,7 +79,9 @@ class App extends Component {
         <SushiContainer
           sushis={this.state.nomming}
           mayIhaveAnother={this.mayIhaveAnother}
-          wheresMyMoney={this.wheresMyMoney} />
+          wheresMyMoney={this.wheresMyMoney}
+          epicMealTime={this.epicMealTime}
+        />
         <Table cashMoney={this.state.cashMoney} />
       </div>
     );

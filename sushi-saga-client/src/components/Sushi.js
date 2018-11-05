@@ -1,43 +1,18 @@
-import React, { Component } from 'react'
+import React, { Fragment } from 'react'
 
-// const Sushi = (props) => {
-//   debugger
-// }
-
-export default class Sushi extends Component {
-  constructor(props) {
-    super(props)
-    this.state = {
-      nommed: false,
-    }
-  }
-
-  nomming = () => {
-    this.setState({
-      nommed: true,
-    })
-    this.props.wheresMyMoney(this.props.sushi.price)
-  }
-
-  render() {
-    return (
+const Sushi = (props) => {
+  // debugger
+  return (
+    <Fragment>
       <div className="sushi">
-        <div className="plate"
-          onClick={this.nomming}>
-          {
-            this.state.nommed ?
-            null
-            :
-            <img src={this.props.sushi.img_url} width="100%" />
-          }
+        <div className="plate" onClick={() => props.epicMealTime(props.sushi)}>
+          { props.sushi.nommed ? null : <img src={ props.sushi.img_url } width="100%" /> }
         </div>
         <h4 className="sushi-details">
-          {this.props.sushi.name} - ${this.props.sushi.price}
+          { props.sushi.name } - ${ props.sushi.price }
         </h4>
       </div>
-    )
-  }
-
+    </Fragment>
+  )
 }
-
-// export default Sushi
+export default Sushi
