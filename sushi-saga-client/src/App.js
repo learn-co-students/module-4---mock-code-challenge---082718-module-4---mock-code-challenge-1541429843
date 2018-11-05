@@ -11,8 +11,8 @@ class App extends Component {
     this.state = {
       sushis: [],
       nomming: [],
-      nommed: [],
-      cashMoney: 20,
+      remnantsOfRavenousGluttony: [],
+      cashMoney: 500,
     }
     this.mayIhaveAnother = this.mayIhaveAnother.bind(this)
   }
@@ -55,6 +55,7 @@ class App extends Component {
     }
   }
 
+
   epicMealTime = (nomz) => {
     if (this.state.cashMoney - nomz.price >= 0) {
       const i = this.state.nomming.findIndex(sushi => sushi.id === nomz.id);
@@ -63,6 +64,7 @@ class App extends Component {
       this.setState(Object.assign({}, this.state, {
         nomming: newNomming,
         cashMoney: this.state.cashMoney - nomz.price,
+        remnantsOfRavenousGluttony: [...this.state.remnantsOfRavenousGluttony, nomz]
       }))
     } else {
       alert('not enough mana')
@@ -79,7 +81,10 @@ class App extends Component {
           wheresMyMoney={this.wheresMyMoney}
           epicMealTime={this.epicMealTime}
         />
-        <Table cashMoney={this.state.cashMoney} />
+        <Table
+          cashMoney={this.state.cashMoney}
+          remnantsOfRavenousGluttony={this.state.remnantsOfRavenousGluttony}
+        />
       </div>
     );
   }
