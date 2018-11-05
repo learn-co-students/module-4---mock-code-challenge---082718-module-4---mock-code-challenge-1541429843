@@ -58,18 +58,25 @@ class App extends Component {
 
   epicMealTime = (nomz) => {
     if (this.state.cashMoney - nomz.price >= 0) {
-      const i = this.state.nomming.findIndex(sushi => sushi.id === nomz.id);
-      const newNomming = this.state.nomming.slice();
-      newNomming[i] = Object.assign({}, nomz, {nommed: true})
-      this.setState(Object.assign({}, this.state, {
-        nomming: newNomming,
-        cashMoney: this.state.cashMoney - nomz.price,
-        remnantsOfRavenousGluttony: [...this.state.remnantsOfRavenousGluttony, nomz]
-      }))
+      if (nomz.nommed === false) {
+        const i = this.state.nomming.findIndex(sushi => sushi.id === nomz.id);
+        const newNomming = this.state.nomming.slice();
+        newNomming[i] = Object.assign({}, nomz, {nommed: true})
+        this.setState(Object.assign({}, this.state, {
+          nomming: newNomming,
+          cashMoney: this.state.cashMoney - nomz.price,
+          remnantsOfRavenousGluttony: [...this.state.remnantsOfRavenousGluttony, nomz]
+        }))
+      }
     } else {
       alert('not enough mana')
     }
+  }
 
+  takeMyMoney = () => {
+    this.setState(Object.assign({}, this.state, {
+      cashMoney: this.state.cashMoney + 20,
+    }))
   }
 
   render() {
@@ -79,6 +86,7 @@ class App extends Component {
           sushis={this.state.nomming}
           mayIhaveAnother={this.mayIhaveAnother}
           wheresMyMoney={this.wheresMyMoney}
+          takeMyMoney={this.takeMyMoney}
           epicMealTime={this.epicMealTime}
         />
         <Table
