@@ -1,4 +1,4 @@
-import React from 'react'
+import React, { Fragment } from 'react'
 import MoreButton from '../components/MoreButton'
 import Sushi from '../components/Sushi'
 
@@ -22,12 +22,12 @@ const SushiContainer = (props) => {
   }
 
   return (
-    <div>
+    <Fragment>
       <div className="belt">
         {getSushi()}
+        <MoreButton moreSushi={props.updateCounter} />
       </div>
-      <MoreButton moreSushi={props.updateCounter} />
-    </div>
+    </Fragment>
   )
 }
 

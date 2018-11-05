@@ -23,7 +23,7 @@ class App extends Component {
 
   addEaten = (sushiArray) => {
     sushiArray.map(sushi => {
-      sushi.eaten = false
+      return sushi.eaten = false
     })
     this.setState({
       sushis: sushiArray
