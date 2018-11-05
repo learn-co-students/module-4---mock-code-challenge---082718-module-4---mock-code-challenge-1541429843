@@ -3,7 +3,7 @@ import SushiContainer from './containers/SushiContainer';
 import Table from './containers/Table';
 
 // Endpoint!
-const API = "http://localhost:3000/sushis"
+// const API = "http://localhost:3000/sushis"
 
 class App extends Component {
 
@@ -26,17 +26,22 @@ class App extends Component {
         this.setState({
           ...this.state,
           allSushi: parsed.map(sushiObj=> {
-            return sushiObj= {...sushiObj,
+            return sushiObj= {
+              ...sushiObj,
               eaten: false}
           })
         })
       })
   }
 
-  deductPrice = (price, sushiID) =>{
+  deductSushi = (price, sushiID) =>{
+    const sushi = this.state.allSushi.map(sushiObj=>{
+      return sushiObj.id === sushiID ? sushiObj.eaten = true : sushiObj
+    })
+
     this.setState({
       ...this.state,
-      allSushi: [...this.state.allSushi, this.state.allSushi[sushiID-1].eaten = true],
+      sushi,
       customer:{
         eatenSushi: [...this.state.customer.eatenSushi, sushiID],
         moneyLeft: this.state.customer.moneyLeft - price
@@ -81,7 +86,7 @@ class App extends Component {
   render() {
     return (
       <div className="app">
-        {this.state.customer.moneyLeft > 9 ? this.state.allSushi.length === 0 ? "Getting Sushi!" : <SushiContainer  allSushi={this.state.allSushi} deductPrice={this.deductPrice} wallet={this.state.customer.moneyLeft} showMore={this.showMore} display={this.state.display}/> : "Too poor for sushi!"}
+        {this.state.customer.moneyLeft > 9 ? this.state.allSushi.length === 0 ? "Getting Sushi!" : <SushiContainer  allSushi={this.state.allSushi} deductSushi={this.deductSushi} wallet={this.state.customer.moneyLeft} showMore={this.showMore} display={this.state.display}/> : "Too poor for sushi!"}
         <Table customer={this.state.customer} addTen={this.addTen}/>
       </div>
     );

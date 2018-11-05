@@ -17,14 +17,7 @@ const Table = (props) => {
       </h1>
       <div className="table">
         <div className="stack">
-          {
-            /*
-               renderPlates takes an array
-               and renders an empty plate
-               for every element in the array
-            */
-            renderPlates(props.customer.eatenSushi)
-          }
+          {renderPlates(props.customer.eatenSushi)}
         </div>
       </div>
     </Fragment>
